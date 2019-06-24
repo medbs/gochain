@@ -1,0 +1,11 @@
+/vendor/
+/build/
+
+### IDE ###
+.idea
+*.iws
+*.iml
+*.ipr
+.vscode/
+.idea/
+.mvn/
