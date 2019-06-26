@@ -1,5 +1,4 @@
-/vendor/
-/build/
+/dist/
 
 ### IDE ###
 .idea
@@ -8,4 +7,3 @@
 *.ipr
 .vscode/
 .idea/
-.mvn/
