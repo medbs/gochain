@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"blockchain/chain"
+	"time"
+)
+
+var blockchain []Block
 
 func main() {
-	fmt.Printf("hello")
+
+	t := time.Now()
+	genesisBlock := chain.Block{}
+	genesisBlock = Block{0, t.String(), chain.calculatHash(genesisBlock), ""}
+	blockchain = append(blockchain, genesisBlock)
+
 }
