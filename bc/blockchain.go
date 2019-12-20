@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+//GenerateNewBlock new block
 func GenerateNewBlock(oldBlock Block) Block {
 	var newBlock Block
 	t := time.Now()
@@ -16,6 +17,7 @@ func GenerateNewBlock(oldBlock Block) Block {
 	return newBlock
 }
 
+//GenerateBlock new block
 func GenerateBlock(oldBlock Block, BPM int) Block {
 
 	var newBlock Block

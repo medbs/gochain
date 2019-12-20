@@ -8,3 +8,8 @@ type Block struct {
 	Hash      string
 	PrevHash  string
 }
+
+//Chain represents the ledger
+type Chain struct {
+	Blockchain []Block
+}

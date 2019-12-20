@@ -1,10 +1,10 @@
-package p2p
+package bc
 
 import (
 	"bufio"
 	"encoding/json"
 	"fmt"
-	ledger "gochain/bc"
+	//	ledger "gochain/bc"
 	"log"
 	"os"
 	"strconv"
@@ -18,20 +18,19 @@ import (
 
 var mutex = &sync.Mutex{}
 
-func HandleStream(s net.Stream, Blockchain []ledger.Block) {
+func (b Chain) HandleStream(s net.Stream) {
 	log.Println("Got a new stream!")
 
 	// Create a buffer stream for non blocking read and write.
 	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
-	go ReadData(rw, Blockchain)
-	go WriteData(rw, Blockchain)
+	go b.ReadData(rw)
+	go b.WriteData(rw)
 
 	// stream 's' will stay open until you close it (or the other side closes it).
 }
 
-func ReadData(rw *bufio.ReadWriter, Blockchain []ledger.Block) {
-
+func (b Chain) ReadData(rw *bufio.ReadWriter) {
 	for {
 		str, err := rw.ReadString('\n')
 		if err != nil {
@@ -43,15 +42,15 @@ func ReadData(rw *bufio.ReadWriter, Blockchain []ledger.Block) {
 		}
 		if str != "\n" {
 
-			chain := make([]ledger.Block, 0)
+			chain := make([]Block, 0)
 			if err := json.Unmarshal([]byte(str), &chain); err != nil {
 				log.Fatal(err)
 			}
 
 			mutex.Lock()
-			if len(chain) > len(Blockchain) {
-				Blockchain = chain
-				bytes, err := json.MarshalIndent(Blockchain, "", "  ")
+			if len(chain) > len(b.Blockchain) {
+				b.Blockchain = chain
+				bytes, err := json.MarshalIndent(b.Blockchain, "", "  ")
 				if err != nil {
 
 					log.Fatal(err)
@@ -65,13 +64,13 @@ func ReadData(rw *bufio.ReadWriter, Blockchain []ledger.Block) {
 	}
 }
 
-func WriteData(rw *bufio.ReadWriter, Blockchain []ledger.Block) {
+func (b Chain) WriteData(rw *bufio.ReadWriter) {
 
 	go func() {
 		for {
 			time.Sleep(5 * time.Second)
 			mutex.Lock()
-			bytes, err := json.Marshal(Blockchain)
+			bytes, err := json.Marshal(b.Blockchain)
 			if err != nil {
 				log.Println(err)
 			}
@@ -99,20 +98,20 @@ func WriteData(rw *bufio.ReadWriter, Blockchain []ledger.Block) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		newBlock := ledger.GenerateBlock(Blockchain[len(Blockchain)-1], bpm)
+		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], bpm)
 
-		if ledger.IsBlockValid(newBlock, Blockchain[len(Blockchain)-1]) {
+		if IsBlockValid(newBlock, b.Blockchain[len(b.Blockchain)-1]) {
 			mutex.Lock()
-			Blockchain = append(Blockchain, newBlock)
+			b.Blockchain = append(b.Blockchain, newBlock)
 			mutex.Unlock()
 		}
 
-		bytes, err := json.Marshal(Blockchain)
+		bytes, err := json.Marshal(b.Blockchain)
 		if err != nil {
 			log.Println(err)
 		}
 
-		spew.Dump(Blockchain)
+		spew.Dump(b.Blockchain)
 
 		mutex.Lock()
 		rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
