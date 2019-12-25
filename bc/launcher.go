@@ -15,13 +15,15 @@ import (
 	gologging "github.com/whyrusleeping/go-logging"
 )
 
-func Launch(chain Chain) {
+//Launch starts the ledger
+func Launch(chain *Chain) {
 	t := time.Now()
 	genesisBlock := Block{}
 	genesisBlock = Block{0, t.String(), 0, CalculateHash(genesisBlock), ""}
 
 	chain.Blockchain = append(chain.Blockchain, genesisBlock)
-
+	//var kek = *chain
+	//fmt.Print(kek)
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for
 	// all loggers with:
@@ -36,6 +38,7 @@ func Launch(chain Chain) {
 
 	if *listenF == 0 {
 		log.Fatal("Please provide a port to bind on with -l")
+
 	}
 
 	// Make a host that listens on the given multiaddress

@@ -6,8 +6,8 @@ import (
 
 // Blockchain is a series of validated Blocks
 //var Blockchain []ledger.Block
-var chain ledger.Chain
 
 func main() {
-	ledger.Launch(chain)
+	var chain ledger.Chain
+	ledger.Launch(&chain)
 }
