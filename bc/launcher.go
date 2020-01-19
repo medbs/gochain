@@ -16,10 +16,15 @@ import (
 )
 
 //Launch starts the ledger
-func Launch(chain *Chain) {
+//func Launch(chain *Chain) {
+func Launch() {
+
+	var chain Chain
+	//chain := &chainStruct
+
 	t := time.Now()
 	genesisBlock := Block{}
-	genesisBlock = Block{0, t.String(), 0, CalculateHash(genesisBlock), ""}
+	genesisBlock = Block{0, t.String(), 69, CalculateHash(genesisBlock), ""}
 
 	chain.Blockchain = append(chain.Blockchain, genesisBlock)
 	//var kek = *chain

@@ -18,7 +18,7 @@ import (
 var mutex = &sync.Mutex{}
 
 //HandleStream handle stream
-func (b *Chain) HandleStream(s net.Stream) {
+func (b Chain) HandleStream(s net.Stream) {
 	log.Println("Got a new stream!")
 
 	// Create a buffer stream for non blocking read and write.
@@ -30,8 +30,8 @@ func (b *Chain) HandleStream(s net.Stream) {
 	// stream 's' will stay open until you close it (or the other side closes it).
 }
 
-//ReadData read data
-func (b *Chain) ReadData(rw *bufio.ReadWriter) {
+// ReadData read data
+func (b Chain) ReadData(rw *bufio.ReadWriter) {
 	for {
 		str, err := rw.ReadString('\n')
 		if err != nil {
@@ -65,8 +65,8 @@ func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 	}
 }
 
-//WriteData write data
-func (b *Chain) WriteData(rw *bufio.ReadWriter) {
+// WriteData write data
+func (b Chain) WriteData(rw *bufio.ReadWriter) {
 
 	go func() {
 		for {
@@ -101,13 +101,12 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 			log.Fatal(err)
 		}
 		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], bpm)
-
+		//issue is here
 		if IsBlockValid(newBlock, b.Blockchain[len(b.Blockchain)-1]) {
 			mutex.Lock()
 			b.Blockchain = append(b.Blockchain, newBlock)
 			mutex.Unlock()
 		}
-
 		bytes, err := json.Marshal(b.Blockchain)
 		if err != nil {
 			log.Println(err)

@@ -8,6 +8,7 @@ import (
 //var Blockchain []ledger.Block
 
 func main() {
-	var chain ledger.Chain
-	ledger.Launch(&chain)
+	//var chain ledger.Chain
+	//ledger.Launch(&chain)
+	ledger.Launch()
 }
