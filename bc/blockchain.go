@@ -7,21 +7,10 @@ import (
 	"time"
 )
 
-//GenerateNewBlock new block
-func GenerateNewBlock(oldBlock Block) Block {
-	var newBlock Block
-	t := time.Now()
-	newBlock.Index = oldBlock.Index + 1
-	newBlock.Timestamp = t.String()
-	newBlock.PrevHash = oldBlock.Hash
-	return newBlock
-}
-
 //GenerateBlock new block
 func GenerateBlock(oldBlock Block, BPM int) Block {
 
 	var newBlock Block
-
 	t := time.Now()
 
 	newBlock.Index = oldBlock.Index + 1
@@ -29,18 +18,8 @@ func GenerateBlock(oldBlock Block, BPM int) Block {
 	newBlock.BPM = BPM
 	newBlock.PrevHash = oldBlock.Hash
 	newBlock.Hash = CalculateHash(newBlock)
-
 	return newBlock
 }
-
-// CalculateHash Calculate SHA256 hash for a new block
-/*func CalculateHash(block Block) string {
-	data := strconv.Itoa(block.Index) + block.Timestamp + block.Hash + block.PrevHash
-	h := sha256.New()
-	h.Write([]byte(data))
-	hashed := h.Sum(nil)
-	return hex.EncodeToString(hashed)
-}*/
 
 // SHA256 hashing
 func CalculateHash(block Block) string {
@@ -50,7 +29,6 @@ func CalculateHash(block Block) string {
 	hashed := h.Sum(nil)
 	return hex.EncodeToString(hashed)
 }
-
 
 
 // IsBlockValid make sure block is valid by checking index, and comparing the hash of the previous block
