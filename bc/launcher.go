@@ -16,19 +16,14 @@ import (
 )
 
 //Launch starts the ledger
-//func Launch(chain *Chain) {
-func Launch() {
-
-	var chain Chain
-	//chain := &chainStruct
+func Launch(chain *Chain) {
 
 	t := time.Now()
 	genesisBlock := Block{}
 	genesisBlock = Block{0, t.String(), 69, CalculateHash(genesisBlock), ""}
 
 	chain.Blockchain = append(chain.Blockchain, genesisBlock)
-	//var kek = *chain
-	//fmt.Print(kek)
+
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for
 	// all loggers with:

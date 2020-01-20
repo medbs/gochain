@@ -1,14 +1,9 @@
 package main
 
-import (
-	ledger "gochain/bc"
-)
-
-// Blockchain is a series of validated Blocks
-//var Blockchain []ledger.Block
+import ledger "gochain/bc"
 
 func main() {
-	//var chain ledger.Chain
-	//ledger.Launch(&chain)
-	ledger.Launch()
+	var chain ledger.Chain
+	ledger.Launch(&chain)
+
 }
