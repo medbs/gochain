@@ -55,12 +55,6 @@ func CalculateHash(block Block) string {
 
 // IsBlockValid make sure block is valid by checking index, and comparing the hash of the previous block
 func IsBlockValid(newBlock , oldBlock Block) bool {
-	/*if (oldBlock.Index != newBlock.Index+1) || (newBlock.PrevHash != oldBlock.Hash) {
-		return false
-	} else if CalculateHash(newBlock) != newBlock.Hash {
-		return false
-	}
-	return true */
 
 	if oldBlock.Index+1 != newBlock.Index {
 		return false

@@ -5,5 +5,5 @@ go build -o dist/gochain
 ```
 
 ```
-cd dist && ./gochain
+cd dist && ./gochain -l 8099
 ```

@@ -101,7 +101,7 @@ func (b Chain) WriteData(rw *bufio.ReadWriter) {
 			log.Fatal(err)
 		}
 		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], bpm)
-		//issue is here
+
 		if IsBlockValid(newBlock, b.Blockchain[len(b.Blockchain)-1]) {
 			mutex.Lock()
 			b.Blockchain = append(b.Blockchain, newBlock)
