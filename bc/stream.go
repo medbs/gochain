@@ -18,7 +18,7 @@ import (
 var mutex = &sync.Mutex{}
 
 //HandleStream handle stream
-func (b Chain) HandleStream(s net.Stream) {
+func (b *Chain) HandleStream(s net.Stream) {
 	log.Println("Got a new stream!")
 
 	// Create a buffer stream for non blocking read and write.
@@ -31,7 +31,7 @@ func (b Chain) HandleStream(s net.Stream) {
 }
 
 // ReadData read data
-func (b Chain) ReadData(rw *bufio.ReadWriter) {
+func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 	for {
 		str, err := rw.ReadString('\n')
 		if err != nil {
@@ -66,7 +66,7 @@ func (b Chain) ReadData(rw *bufio.ReadWriter) {
 }
 
 // WriteData write data
-func (b Chain) WriteData(rw *bufio.ReadWriter) {
+func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 
 	go func() {
 		for {
