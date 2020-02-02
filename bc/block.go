@@ -8,7 +8,7 @@ import (
 )
 
 //GenerateBlock new block
-func GenerateBlock(oldBlock Block, BPM int) Block {
+func GenerateBlock(oldBlock Block, BPM string) Block {
 
 	var newBlock Block
 	t := time.Now()
@@ -23,7 +23,7 @@ func GenerateBlock(oldBlock Block, BPM int) Block {
 
 // SHA256 hashing
 func CalculateHash(block Block) string {
-	record := strconv.Itoa(block.Index) + block.Timestamp + strconv.Itoa(block.BPM) + block.PrevHash
+	record := strconv.Itoa(block.Index) + block.Timestamp + block.BPM + block.PrevHash
 	h := sha256.New()
 	h.Write([]byte(record))
 	hashed := h.Sum(nil)

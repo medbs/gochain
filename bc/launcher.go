@@ -20,7 +20,7 @@ func Launch(chain *Chain) {
 
 	t := time.Now()
 	genesisBlock := Block{}
-	genesisBlock = Block{0, t.String(), 69, CalculateHash(genesisBlock), ""}
+	genesisBlock = Block{0, t.String(), "genesis block", CalculateHash(genesisBlock), ""}
 
 	chain.Blockchain = append(chain.Blockchain, genesisBlock)
 

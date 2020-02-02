@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -96,11 +95,8 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 		}
 
 		sendData = strings.Replace(sendData, "\n", "", -1)
-		bpm, err := strconv.Atoi(sendData)
-		if err != nil {
-			log.Fatal(err)
-		}
-		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], bpm)
+
+		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], sendData)
 
 		if IsBlockValid(newBlock, b.Blockchain[len(b.Blockchain)-1]) {
 			mutex.Lock()
