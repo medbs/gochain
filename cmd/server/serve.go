@@ -10,6 +10,9 @@ import (
 var CommandServe *cobra.Command
 
 var port int
+var target string
+var secio bool
+var seed int64
 
 func init() {
 	CommandServe = &cobra.Command{
@@ -24,7 +27,10 @@ func init() {
 		},
 	}
 
-	CommandServe.Flags().IntVar(&port, "port", 8099, "port port of the app")
+	CommandServe.Flags().IntVar(&port, "l", 8199, "port port of the app")
+	CommandServe.Flags().StringVar(&target, "d", "", "target")
+	CommandServe.Flags().BoolVar(&secio, "secio", true, "secio")
+	CommandServe.Flags().Int64Var(&seed, "seed", 0, "seed")
 }
 
 func serve(cmd *cobra.Command, args []string) error {
@@ -32,10 +38,10 @@ func serve(cmd *cobra.Command, args []string) error {
 	//var chain ledger.Chain
 	//ledger.Launch(&chain)
 	c:= ledger.NewChain(&ledger.P2pConfig{
-			ListenF: 8987,
-			Target: "",
-			Secio: true,
-			Seed: 0,
+			ListenF: port,
+			Target: target,
+			Secio: secio,
+			Seed: seed,
 		})
 
 	ledger.Launch(c)
