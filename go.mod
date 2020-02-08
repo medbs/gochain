@@ -19,13 +19,19 @@ require (
 	github.com/mattn/go-isatty v0.0.11 // indirect
 	github.com/mattn/go-runewidth v0.0.7 // indirect
 	github.com/multiformats/go-multiaddr v0.2.0
+	github.com/pelletier/go-toml v1.6.0 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.4.2 // indirect
+	github.com/spf13/afero v1.2.2 // indirect
+	github.com/spf13/cast v1.3.1 // indirect
+	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
+	github.com/spf13/viper v1.6.2 // indirect
 	github.com/whyrusleeping/go-logging v0.0.1
 	go.starlark.net v0.0.0-20191218235703-9fcb808a6221 // indirect
 	golang.org/x/arch v0.0.0-20191126211547-368ea8f32fff // indirect
 	golang.org/x/crypto v0.0.0-20191219195013-becbf705a915 // indirect
-	golang.org/x/sys v0.0.0-20191220220014-0732a990476f // indirect
-	gopkg.in/yaml.v2 v2.2.7 // indirect
+	golang.org/x/sys v0.0.0-20200202164722-d101bd2416d5 // indirect
+	gopkg.in/ini.v1 v1.52.0 // indirect
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

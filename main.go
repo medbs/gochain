@@ -1,6 +1,8 @@
 package main
 
-import ledger "gochain/bc"
+import (
+	ledger "gochain/core"
+)
 
 func main() {
 	var chain ledger.Chain

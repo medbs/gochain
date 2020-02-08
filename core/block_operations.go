@@ -1,4 +1,4 @@
-package bc
+package core
 
 import (
 	"crypto/sha256"

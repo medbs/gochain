@@ -1,17 +1,16 @@
-package bc
+package core
 
 import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
+	net "github.com/libp2p/go-libp2p-core/network"
 	"log"
 	"os"
 	"strings"
 	"sync"
 	"time"
-
-	"github.com/davecgh/go-spew/spew"
-	net "github.com/libp2p/go-libp2p-core/network"
 )
 
 var mutex = &sync.Mutex{}
