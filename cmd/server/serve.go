@@ -42,6 +42,10 @@ func serve(cmd *cobra.Command, args []string) error {
 			Seed: seed,
 		})
 
-	ledger.Launch(c)
+	err := ledger.Launch(c)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

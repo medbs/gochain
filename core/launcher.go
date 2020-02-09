@@ -16,7 +16,7 @@ import (
 )
 
 //Launch starts the ledger
-func Launch(chain *Chain) {
+func Launch(chain *Chain) error {
 
 	t := time.Now()
 	genesisBlock := Block{}
@@ -46,6 +46,7 @@ func Launch(chain *Chain) {
 	ha, err := MakeBasicHost(*listenF, *secio, *seed)
 	if err != nil {
 		log.Fatal(err)
+		return err
 	}
 
 	if *target == "" {
@@ -64,16 +65,19 @@ func Launch(chain *Chain) {
 		ipfsaddr, err := ma.NewMultiaddr(*target)
 		if err != nil {
 			log.Fatalln(err)
+			return err
 		}
 
 		pid, err := ipfsaddr.ValueForProtocol(ma.P_IPFS)
 		if err != nil {
 			log.Fatalln(err)
+			return err
 		}
 
 		peerid, err := peer.IDB58Decode(pid)
 		if err != nil {
 			log.Fatalln(err)
+			return err
 		}
 
 		// Decapsulate the /ipfs/<peerID> part from the target
@@ -93,6 +97,7 @@ func Launch(chain *Chain) {
 		s, err := ha.NewStream(context.Background(), peerid, "/p2p/1.0.0")
 		if err != nil {
 			log.Fatalln(err)
+			return err
 		}
 		// Create a buffered stream so that read and writes are non blocking.
 		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
@@ -103,5 +108,6 @@ func Launch(chain *Chain) {
 
 		select {} // hang forever
 
+		return nil
 	}
 }
