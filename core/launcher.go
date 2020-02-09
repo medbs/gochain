@@ -29,12 +29,7 @@ func Launch(chain *Chain) {
 	// all loggers with:
 	golog.SetAllLoggers(gologging.INFO) // Change to DEBUG for extra info
 
-	// Parse options from the command line
-	//listenF := flag.Int("l", 0, "wait for incoming connections")
-	//target := flag.String("d", "", "target peer to dial")
-	//secio := flag.Bool("secio", false, "enable secio")
-	//seed := flag.Int64("seed", 0, "set random seed for id generation")
-
+	// Parse options
 	listenF := &chain.P2pConfig.ListenF
 	target := &chain.P2pConfig.Target
 	secio:= &chain.P2pConfig.Secio

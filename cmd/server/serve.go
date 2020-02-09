@@ -27,16 +27,14 @@ func init() {
 		},
 	}
 
-	CommandServe.Flags().IntVar(&port, "l", 8199, "port port of the app")
-	CommandServe.Flags().StringVar(&target, "d", "", "target")
-	CommandServe.Flags().BoolVar(&secio, "secio", true, "secio")
-	CommandServe.Flags().Int64Var(&seed, "seed", 0, "seed")
+	CommandServe.Flags().IntVar(&port, "l", 8199, "port: wait for incoming connections")
+	CommandServe.Flags().StringVar(&target, "d", "", "target peer to dial")
+	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")
+	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
 }
 
 func serve(cmd *cobra.Command, args []string) error {
 
-	//var chain ledger.Chain
-	//ledger.Launch(&chain)
 	c:= ledger.NewChain(&ledger.P2pConfig{
 			ListenF: port,
 			Target: target,
