@@ -19,12 +19,12 @@ type Block struct {
 
 //Chain represents the ledger
 type Chain struct {
-	Blockchain []Block
+	BlockChain []Block
 	P2pConfig *P2pConfig
 }
 
 
-func NewChain(c *P2pConfig) (*Chain) {
+func NewBlockChain(c *P2pConfig) *Chain {
 
 	return &Chain {
 		P2pConfig:c,

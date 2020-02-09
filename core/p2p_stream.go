@@ -47,9 +47,9 @@ func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 			}
 
 			mutex.Lock()
-			if len(chain) > len(b.Blockchain) {
-				b.Blockchain = chain
-				bytes, err := json.MarshalIndent(b.Blockchain, "", "  ")
+			if len(chain) > len(b.BlockChain) {
+				b.BlockChain = chain
+				bytes, err := json.MarshalIndent(b.BlockChain, "", "  ")
 				if err != nil {
 
 					log.Fatal(err)
@@ -70,7 +70,7 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 		for {
 			time.Sleep(5 * time.Second)
 			mutex.Lock()
-			bytes, err := json.Marshal(b.Blockchain)
+			bytes, err := json.Marshal(b.BlockChain)
 			if err != nil {
 				log.Println(err)
 			}
@@ -95,19 +95,19 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 
 		sendData = strings.Replace(sendData, "\n", "", -1)
 
-		newBlock := GenerateBlock(b.Blockchain[len(b.Blockchain)-1], sendData)
+		newBlock := GenerateBlock(b.BlockChain[len(b.BlockChain)-1], sendData)
 
-		if IsBlockValid(newBlock, b.Blockchain[len(b.Blockchain)-1]) {
+		if IsBlockValid(newBlock, b.BlockChain[len(b.BlockChain)-1]) {
 			mutex.Lock()
-			b.Blockchain = append(b.Blockchain, newBlock)
+			b.BlockChain = append(b.BlockChain, newBlock)
 			mutex.Unlock()
 		}
-		bytes, err := json.Marshal(b.Blockchain)
+		bytes, err := json.Marshal(b.BlockChain)
 		if err != nil {
 			log.Println(err)
 		}
 
-		spew.Dump(b.Blockchain)
+		spew.Dump(b.BlockChain)
 
 		mutex.Lock()
 		rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))

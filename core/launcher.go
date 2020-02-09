@@ -22,7 +22,7 @@ func Launch(chain *Chain) {
 	genesisBlock := Block{}
 	genesisBlock = Block{0, t.String(), "genesis block", CalculateHash(genesisBlock), ""}
 
-	chain.Blockchain = append(chain.Blockchain, genesisBlock)
+	chain.BlockChain = append(chain.BlockChain, genesisBlock)
 
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for

@@ -35,7 +35,7 @@ func init() {
 
 func serve(cmd *cobra.Command, args []string) error {
 
-	c:= ledger.NewChain(&ledger.P2pConfig{
+	c:= ledger.NewBlockChain(&ledger.P2pConfig{
 			ListenF: port,
 			Target: target,
 			Secio: secio,
