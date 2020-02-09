@@ -1,6 +1,6 @@
 ### todo 
 
 - [x] Blockchain should store different types of inputs (string, int)
-- [ ] Automatic starting of all nodes (The user shouldn't do it manually )
+- [x] Use Cobra to start all the nodes
 - [ ] Submitting data via REST
 - [ ] 
