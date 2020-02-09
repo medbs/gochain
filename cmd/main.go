@@ -5,7 +5,6 @@ import (
 	"github.com/spf13/cobra"
 	servecmd "gochain/cmd/server"
 	versioncmd "gochain/cmd/version"
-	//ledger "gochain/core"
 	"os"
 )
 
@@ -28,9 +27,6 @@ func commandRoot() *cobra.Command {
 
 
 func main() {
-
-	//var chain ledger.Chain
-	//ledger.Launch(&chain)
 
 	if err := commandRoot().Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
