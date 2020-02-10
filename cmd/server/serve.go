@@ -20,7 +20,7 @@ func init() {
 		Short: "Start the app",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
-			if err := serve(CommandServe, args); err != nil {
+			if err := serve(); err != nil {
 				fmt.Fprintln(os.Stderr, err)
 				os.Exit(2)
 			}
@@ -33,7 +33,7 @@ func init() {
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
 }
 
-func serve(cmd *cobra.Command, args []string) error {
+func serve() error {
 
 	c:= ledger.NewBlockChain(&ledger.P2pConfig{
 			ListenF: port,

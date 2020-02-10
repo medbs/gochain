@@ -77,8 +77,16 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 			mutex.Unlock()
 
 			mutex.Lock()
-			rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
-			rw.Flush()
+			_, err = rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
+
+			if err != nil {
+				log.Println(err)
+			}
+			err = rw.Flush()
+
+			if err != nil {
+				log.Println(err)
+			}
 			mutex.Unlock()
 
 		}
@@ -110,8 +118,16 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 		spew.Dump(b.BlockChain)
 
 		mutex.Lock()
-		rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
-		rw.Flush()
+		_,err = rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
+		if err != nil {
+			log.Println(err)
+		}
+
+		err = rw.Flush()
+		if err != nil {
+			log.Println(err)
+		}
+
 		mutex.Unlock()
 	}
 
