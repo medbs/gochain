@@ -11,7 +11,7 @@ func CommandVersion() *cobra.Command {
 		Use:   "version",
 		Short: "Print the version and exit",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Printf(`psa-be Version: %s
+			fmt.Printf(`go-chain: %s
 API Version: %s
 Go Version: %s
 Go OS/ARCH: %s %s

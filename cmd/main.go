@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	servecmd "gochain/cmd/server"
-	versioncmd "gochain/cmd/version"
+	restCmd "gochain/cmd/rest"
+	serveCmd "gochain/cmd/server"
+	versionCmd "gochain/cmd/version"
 	"os"
 )
 
@@ -20,11 +21,11 @@ func commandRoot() *cobra.Command {
 	}
 
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
-	rootCmd.AddCommand(servecmd.CommandServe)
-	rootCmd.AddCommand(versioncmd.CommandVersion())
+	rootCmd.AddCommand(serveCmd.CommandServe)
+	rootCmd.AddCommand(versionCmd.CommandVersion())
+	rootCmd.AddCommand(restCmd.CommandServe)
 	return rootCmd
 }
-
 
 func main() {
 
