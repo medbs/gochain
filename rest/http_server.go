@@ -18,7 +18,8 @@ func NewRouter() *gin.Engine {
 		})
 	})*/
 
-	v1.POST("/tasks", AddData)
+	v1.POST("/add", AddData)
+	v1.GET("/get", AddData)
 	return router
 }
 

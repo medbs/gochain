@@ -13,7 +13,7 @@ var port string
 func init() {
 	CommandServe = &cobra.Command{
 		Use:   "hs",
-		Short: "Start the http server",
+		Short: "Start the http ledger",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
 			if err := serve(); err != nil {
@@ -23,7 +23,7 @@ func init() {
 		},
 	}
 
-	CommandServe.Flags().StringVar(&port, "p", ":8199", "port of the http server")
+	CommandServe.Flags().StringVar(&port, "p", ":8199", "port of the http ledger")
 }
 
 func serve() error {

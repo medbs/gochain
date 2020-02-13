@@ -1,4 +1,4 @@
-package server
+package ledger
 
 import (
 	"fmt"
@@ -16,8 +16,8 @@ var seed int64
 
 func init() {
 	CommandServe = &cobra.Command{
-		Use:   "serve",
-		Short: "Start the app",
+		Use:   "bc",
+		Short: "Start the BlockChain",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
 			if err := serve(); err != nil {

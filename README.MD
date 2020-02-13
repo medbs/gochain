@@ -5,7 +5,7 @@
 ### Run the project
 
 ```
-go run cmd/main.go serve --l 9090
+go run cmd/main.go bc --l 9090
 ```
 
 
