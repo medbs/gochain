@@ -42,7 +42,7 @@ func serve() error {
 			Seed: seed,
 		})
 
-	err := ledger.Launch(c)
+	_ ,err := ledger.Launch(c)
 	if err != nil {
 		return err
 	}

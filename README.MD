@@ -19,3 +19,9 @@ Run
 ```
 dist/chain serve --l 9090
 ```
+
+### add Data to the ledger
+
+```
+curl -d '{"field":"t1"}' -H "Content-Type: application/json" -X POST http://localhost:8099/api/v1/ledger
+```
