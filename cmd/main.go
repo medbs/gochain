@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	restCmd "gochain/cmd/rest"
 	blockChainCmd "gochain/cmd/ledger"
+	restCmd "gochain/cmd/rest"
 	versionCmd "gochain/cmd/version"
 	"os"
 )
