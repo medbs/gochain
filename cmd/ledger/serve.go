@@ -14,14 +14,18 @@ var target string
 var secio bool
 var seed int64
 
+var GlobalChain *ledger.Chain
+
 func init() {
 	CommandServe = &cobra.Command{
 		Use:   "bc",
 		Short: "Start the BlockChain",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
-			if err := serve(); err != nil {
+			if GlobalChain, err := serve(); err != nil {
 				fmt.Fprintln(os.Stderr, err)
+				//dummy display
+				fmt.Println(GlobalChain)
 				os.Exit(2)
 			}
 		},
@@ -33,19 +37,19 @@ func init() {
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
 }
 
-func serve() error {
+func serve() (*ledger.Chain, error) {
 
-	c:= ledger.NewBlockChain(&ledger.P2pConfig{
-			ListenF: port,
-			Target: target,
-			Secio: secio,
-			Seed: seed,
-		})
+	c := ledger.NewBlockChain(&ledger.P2pConfig{
+		ListenF: port,
+		Target:  target,
+		Secio:   secio,
+		Seed:    seed,
+	})
 
-	_ ,err := ledger.Launch(c)
+	_, err := ledger.Launch(c)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	return nil
+	return c, nil
 }

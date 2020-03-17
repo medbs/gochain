@@ -3,7 +3,8 @@ package rest
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	rest "gochain/rest"
+	ledger "gochain/cmd/ledger"
+	"gochain/core"
 	"os"
 )
 
@@ -27,8 +28,9 @@ func init() {
 }
 
 func serve() error {
+	GlobalChain := ledger.GlobalChain
 	//s := rest.NewHttpServer(&port)
-	r := rest.NewRouter()
+	r := core.NewRouter(GlobalChain)
 	err := r.Run(port)
 	if err != nil {
 		return err

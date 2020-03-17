@@ -10,13 +10,17 @@ go run cmd/main.go bc --l 9090
 
 Start http server
 ```
-go run cmd/main.go hs --p 8099
+go run cmd/main.go hs --p :8099
 ```
 
 Add data to the ledger
 
 ```
 curl -d '{"field":"t1"}' -H "Content-Type: application/json" -X POST http://localhost:8099/api/v1/ledger
+```
+
+```
+curl  -X POST http://localhost:8099/api/v1/ledger?data=helloworld
 ```
 
 ### Build & run the project
