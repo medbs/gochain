@@ -9,6 +9,10 @@ type P2pConfig struct {
 }
 
 
+type HttpConfig struct {
+	HttpPort string
+}
+
 //Block represents each 'item' in the BlockChain
 type Block struct {
 	Index     int
@@ -22,12 +26,14 @@ type Block struct {
 type Chain struct {
 	BlockChain []Block
 	P2pConfig *P2pConfig
+	HttpConfig *HttpConfig
 }
 
 //returns a configured BlockChain
-func NewBlockChain(c *P2pConfig) *Chain {
+func NewBlockChain(c *P2pConfig, h *HttpConfig) *Chain {
 
 	return &Chain {
 		P2pConfig:c,
+		HttpConfig:h,
 	}
 }

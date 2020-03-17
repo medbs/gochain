@@ -3,18 +3,18 @@ package ledger
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	ledger "gochain/core"
+	core "gochain/core"
+	"log"
 	"os"
 )
 
 var CommandServe *cobra.Command
 
-var port int
+var p2pPort int
 var target string
 var secio bool
 var seed int64
-
-var GlobalChain *ledger.Chain
+var httpPort string
 
 func init() {
 	CommandServe = &cobra.Command{
@@ -22,34 +22,41 @@ func init() {
 		Short: "Start the BlockChain",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
-			if GlobalChain, err := serve(); err != nil {
+
+			if err := serve(); err != nil {
 				fmt.Fprintln(os.Stderr, err)
-				//dummy display
-				fmt.Println(GlobalChain)
-				os.Exit(2)
 			}
 		},
 	}
 
-	CommandServe.Flags().IntVar(&port, "l", 8199, "port: wait for incoming connections")
+	CommandServe.Flags().IntVar(&p2pPort, "l", 8199, "port: wait for incoming connections")
 	CommandServe.Flags().StringVar(&target, "d", "", "target peer to dial")
 	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
+	CommandServe.Flags().StringVar(&httpPort, "p", ":8090", "port of the http ledger")
 }
 
-func serve() (*ledger.Chain, error) {
+func serve() error {
 
-	c := ledger.NewBlockChain(&ledger.P2pConfig{
-		ListenF: port,
+	c := core.NewBlockChain(&core.P2pConfig{
+		ListenF: p2pPort,
 		Target:  target,
 		Secio:   secio,
 		Seed:    seed,
-	})
+	}, &core.HttpConfig{
+		HttpPort: httpPort})
 
-	_, err := ledger.Launch(c)
+	log.Println("running p2p server")
+	nc, err := core.Launch(c)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return c, nil
+	log.Println("running http server")
+	err = nc.Run(httpPort)
+	if err != nil {
+		return err
+	}
+	return nil
+
 }

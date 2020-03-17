@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	blockChainCmd "gochain/cmd/ledger"
-	restCmd "gochain/cmd/rest"
 	versionCmd "gochain/cmd/version"
 	"os"
 )
@@ -24,7 +23,6 @@ func commandRoot() *cobra.Command {
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 	rootCmd.AddCommand(blockChainCmd.CommandServe)
 	rootCmd.AddCommand(versionCmd.CommandVersion())
-	rootCmd.AddCommand(restCmd.CommandServe)
 	return rootCmd
 }
 

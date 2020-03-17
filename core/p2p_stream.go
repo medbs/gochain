@@ -70,8 +70,6 @@ func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 
 func (b *Chain) WriteDataRest(c *gin.Context) {
 
-	//stdReader := bufio.NewReader(os.Stdin)
-
 	for {
 		fmt.Print("> ")
 		//sentData, err := stdReader.ReadString('\n')
