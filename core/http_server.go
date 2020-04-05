@@ -13,7 +13,7 @@ import (
 	return router
 }*/
 
-func (b *Chain)Run(port string) error {
+func (b *Chain) Run(port string) error {
 	router := gin.Default()
 	v1 := router.Group("/api/v1/ledger")
 	v1.POST("", b.AddData)

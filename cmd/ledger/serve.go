@@ -3,6 +3,7 @@ package ledger
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"gochain/cmd/rest"
 	core "gochain/core"
 	"log"
 	"os"
@@ -22,10 +23,16 @@ func init() {
 		Short: "Start the BlockChain",
 		Long:  ``,
 		Run: func(CommandServe *cobra.Command, args []string) {
-
-			if err := serve(); err != nil {
+			nc, err := serve()
+			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 			}
+			rest.GlobalChain = nc
+
+			//if nc, err := serve(); err != nil {
+			//	fmt.Fprintln(os.Stderr, err)
+			//}
+
 		},
 	}
 
@@ -34,9 +41,10 @@ func init() {
 	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
 	CommandServe.Flags().StringVar(&httpPort, "p", ":8090", "port of the http ledger")
+
 }
 
-func serve() error {
+func serve() (*core.Chain, error) {
 
 	c := core.NewBlockChain(&core.P2pConfig{
 		ListenF: p2pPort,
@@ -47,16 +55,23 @@ func serve() error {
 		HttpPort: httpPort})
 
 	log.Println("running p2p server")
+
 	nc, err := core.Launch(c)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	log.Println("running http server")
-	err = nc.Run(httpPort)
-	if err != nil {
-		return err
-	}
-	return nil
+	//passedChain <- nc
+	//log.Println("running http server")
+	//go func() error {
+	//	//c := <-passedChain
+	//	err := nc.Run(httpPort)
+	//	if err != nil {
+	//		return err
+	//	}
+	//	return nil
+	//}()
+
+	return nc, nil
 
 }

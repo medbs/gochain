@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	blockChainCmd "gochain/cmd/ledger"
-	versionCmd "gochain/cmd/version"
+	httpCmd "gochain/cmd/rest"
+	"gochain/core"
 	"os"
 )
 
 var verbose bool
 
+var GlobalChain *core.Chain
 
 func commandRoot() *cobra.Command {
 	rootCmd := &cobra.Command{
@@ -22,7 +24,7 @@ func commandRoot() *cobra.Command {
 
 	rootCmd.PersistentFlags().BoolVarP(&verbose, "verbose", "v", false, "verbose output")
 	rootCmd.AddCommand(blockChainCmd.CommandServe)
-	rootCmd.AddCommand(versionCmd.CommandVersion())
+	rootCmd.AddCommand(httpCmd.CommandServe)
 	return rootCmd
 }
 
