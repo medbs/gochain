@@ -56,7 +56,7 @@ func serve() (*core.Chain, error) {
 
 	log.Println("running p2p server")
 
-	nc, err := core.Launch(c)
+	nc, err := c.Launch()
 	if err != nil {
 		return nil, err
 	}

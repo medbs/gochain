@@ -16,13 +16,13 @@ import (
 )
 
 //Launch starts the ledger
-func Launch(chain *Chain) (*Chain, error) {
+func (b *Chain) Launch() (*Chain, error) {
 
 	t := time.Now()
 	genesisBlock := Block{}
 	genesisBlock = Block{0, t.String(), "genesis block", CalculateHash(genesisBlock), ""}
 
-	chain.BlockChain = append(chain.BlockChain, genesisBlock)
+	b.BlockChain = append(b.BlockChain, genesisBlock)
 
 	// LibP2P code uses golog to log messages. They log with different
 	// string IDs (i.e. "swarm"). We can control the verbosity level for
@@ -30,10 +30,10 @@ func Launch(chain *Chain) (*Chain, error) {
 	golog.SetAllLoggers(gologging.INFO) // Change to DEBUG for extra info
 
 	// Parse options
-	listenF := &chain.P2pConfig.ListenF
-	target := &chain.P2pConfig.Target
-	secio:= &chain.P2pConfig.Secio
-    seed:= &chain.P2pConfig.Seed
+	listenF := &b.P2pConfig.ListenF
+	target := &b.P2pConfig.Target
+	secio:= &b.P2pConfig.Secio
+    seed:= &b.P2pConfig.Seed
 
 	flag.Parse()
 
@@ -53,12 +53,12 @@ func Launch(chain *Chain) (*Chain, error) {
 		log.Println("listening for connections")
 		// Set a stream handler on host A. /p2p/1.0.0 is
 		// a user-defined protocol name.
-		ha.SetStreamHandler("/p2p/1.0.0", chain.HandleStream)
+		ha.SetStreamHandler("/p2p/1.0.0", b.HandleStream)
 
 		select {} // hang forever
 		/**** This is where the listener code ends ****/
 	} else {
-		ha.SetStreamHandler("/p2p/1.0.0", chain.HandleStream)
+		ha.SetStreamHandler("/p2p/1.0.0", b.HandleStream)
 
 		// The following code extracts target's peer ID from the
 		// given multiaddress
@@ -103,11 +103,11 @@ func Launch(chain *Chain) (*Chain, error) {
 		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
 		// Create a thread to read and write data.
-		go chain.WriteData(rw)
-		go chain.ReadData(rw)
+		go b.WriteData(rw)
+		go b.ReadData(rw)
 
 		select {} // hang forever
 
-		return chain, nil
+		return b, nil
 	}
 }
