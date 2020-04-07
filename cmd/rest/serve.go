@@ -3,13 +3,12 @@ package rest
 import (
 	"fmt"
 	"github.com/spf13/cobra"
-	"gochain/core"
+	"gochain/cmd/ledger"
 	"log"
 	"os"
 )
 
 var CommandServe *cobra.Command
-var GlobalChain *core.Chain
 
 func init() {
 	CommandServe = &cobra.Command{
@@ -27,21 +26,8 @@ func init() {
 
 func serve() error {
 
-	//log.Println("running http server")
-	//go func() error {
-	//	//c := <-passedChain
-	//	err := ledger.GlobalChain.Run(":8090")
-	//	if err != nil {
-	//		return err
-	//	}
-	//	return nil
-	//}()
-	//
-	//return nil
-
 	log.Println("running http server")
-	//c := <-passedChain
-	err := GlobalChain.Run(":8090")
+	err := ledger.GlobalChain.Run(":8090")
 	if err != nil {
 		return err
 	}

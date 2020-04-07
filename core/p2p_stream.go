@@ -64,13 +64,11 @@ func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 	}
 }
 
-/*func (b *Chain) ReadDataRest(c *gin.Context){
 
-}*/
 
 func (b *Chain) WriteDataRest(c *gin.Context) {
 
-	for {
+	//for {
 		fmt.Print("> ")
 		//sentData, err := stdReader.ReadString('\n')
 		sentData := c.Query("data")
@@ -87,7 +85,7 @@ func (b *Chain) WriteDataRest(c *gin.Context) {
 			mutex.Lock()
 			b.BlockChain = append(b.BlockChain, newBlock)
 			mutex.Unlock()
-		}
+		//}
 		/*bytes, err := json.Marshal(b.BlockChain)
 		if err != nil {
 			log.Println(err)

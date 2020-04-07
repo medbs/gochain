@@ -102,6 +102,8 @@ func (b *Chain) Launch() (*Chain, error) {
 		// Create a buffered stream so that read and writes are non blocking.
 		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
+		//go b.Run(":8090")
+
 		// Create a thread to read and write data.
 		go b.WriteData(rw)
 		go b.ReadData(rw)

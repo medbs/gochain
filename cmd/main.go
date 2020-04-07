@@ -5,13 +5,12 @@ import (
 	"github.com/spf13/cobra"
 	blockChainCmd "gochain/cmd/ledger"
 	httpCmd "gochain/cmd/rest"
-	"gochain/core"
 	"os"
 )
 
 var verbose bool
 
-var GlobalChain *core.Chain
+
 
 func commandRoot() *cobra.Command {
 	rootCmd := &cobra.Command{
@@ -29,6 +28,8 @@ func commandRoot() *cobra.Command {
 }
 
 func main() {
+
+
 
 	if err := commandRoot().Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
