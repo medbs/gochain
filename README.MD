@@ -5,10 +5,14 @@
 
 Start the ledger
 ```
-go run cmd/main.go bc --l 9090
+go run cmd/main.go bc --ptpPort 9090 --httpPort 8090
 ```
 
 Add data to the ledger
+
+```
+curl  -X POST http://localhost:8090/api/v1/ledger?data=hd
+```
 
 ```
 curl -d '{"field":"t1"}' -H "Content-Type: application/json" -X POST http://localhost:8099/api/v1/ledger

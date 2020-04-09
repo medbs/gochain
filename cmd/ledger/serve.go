@@ -17,10 +17,6 @@ var secio bool
 var seed int64
 var httpPort int
 
-var GlobalChain *core.Chain
-
-var kek *core.Chain
-
 func init() {
 	CommandServe = &cobra.Command{
 		Use:   "bc",
@@ -49,11 +45,11 @@ func init() {
 		},
 	}
 
-	CommandServe.Flags().IntVar(&p2pPort, "l", 8199, "port: wait for incoming connections")
+	CommandServe.Flags().IntVar(&p2pPort, "ptpPort", 8199, "port: wait for incoming connections")
 	CommandServe.Flags().StringVar(&target, "d", "", "target peer to dial")
 	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
-	CommandServe.Flags().IntVar(&httpPort, "p", 8090, "port of the http ledger")
+	CommandServe.Flags().IntVar(&httpPort, "httpPort", 8090, "port of the gin http server")
 
 }
 
