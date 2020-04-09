@@ -9,8 +9,6 @@ import (
 
 var verbose bool
 
-
-
 func commandRoot() *cobra.Command {
 	rootCmd := &cobra.Command{
 		Use: "go-chain",

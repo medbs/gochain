@@ -61,10 +61,10 @@ func MakeBasicHost(listenPort int, secio bool, randseed int64) (host.Host, error
 	fullAddr := addr.Encapsulate(hostAddr)
 	log.Printf("I am %s\n", fullAddr)
 	if secio {
-		log.Printf("Now run \"go run cmd/main.go bc --l %d --d %s --secio\" on a different terminal\n", listenPort+1, fullAddr)
+		log.Printf("Now run \"go run cmd/main.go bc --ptpPort %d --d %s --secio\" on a different terminal\n", listenPort+1, fullAddr)
 
 	} else {
-		log.Printf("Now run \"go run cmd/main.go bc --l %d --d %s\" on a different terminal\n", listenPort+1, fullAddr)
+		log.Printf("Now run \"go run cmd/main.go bc --ptpPort %d --d %s\" on a different terminal\n", listenPort+1, fullAddr)
 
 	}
 
