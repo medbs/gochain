@@ -6,6 +6,7 @@ import (
 	core "gochain/core"
 	"log"
 	"os"
+	"strconv"
 )
 
 var CommandServe *cobra.Command
@@ -14,10 +15,9 @@ var p2pPort int
 var target string
 var secio bool
 var seed int64
-var httpPort string
+var httpPort int
 
 var GlobalChain *core.Chain
-
 
 var kek *core.Chain
 
@@ -36,7 +36,9 @@ func init() {
 			}, &core.HttpConfig{
 				HttpPort: httpPort})
 
-			go c.Run(":8090")
+			log.Println("running http server")
+			httpPort := strconv.Itoa(c.HttpConfig.HttpPort)
+			go c.Run(":" + httpPort)
 
 			_, err := serve(c)
 
@@ -51,14 +53,13 @@ func init() {
 	CommandServe.Flags().StringVar(&target, "d", "", "target peer to dial")
 	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")
 	CommandServe.Flags().Int64Var(&seed, "seed", 0, "set random seed for id generation")
-	CommandServe.Flags().StringVar(&httpPort, "p", ":8090", "port of the http ledger")
+	CommandServe.Flags().IntVar(&httpPort, "p", 8090, "port of the http ledger")
 
 }
 
 func serve(c *core.Chain) (*core.Chain, error) {
 
 	log.Println("running p2p server")
-
 
 	GlobalChain, err := c.Launch()
 

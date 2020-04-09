@@ -10,7 +10,7 @@ type P2pConfig struct {
 
 
 type HttpConfig struct {
-	HttpPort string
+	HttpPort int
 }
 
 //Block represents each 'item' in the BlockChain
