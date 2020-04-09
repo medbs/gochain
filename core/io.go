@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/gin-gonic/gin"
 	net "github.com/libp2p/go-libp2p-core/network"
 	"log"
 	"os"
@@ -22,14 +23,14 @@ func (b *Chain) HandleStream(s net.Stream) {
 	// Create a buffer stream for non blocking read and write.
 	rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))
 
-	go b.ReadData(rw)
-	go b.WriteData(rw)
+	go b.ReadDataCli(rw)
+	go b.WriteDataCli(rw)
 
 	// stream 's' will stay open until you close it (or the other side closes it).
 }
 
 // ReadData read data
-func (b *Chain) ReadData(rw *bufio.ReadWriter) {
+func (b *Chain) ReadDataCli(rw *bufio.ReadWriter) {
 	for {
 		str, err := rw.ReadString('\n')
 		if err != nil {
@@ -64,7 +65,7 @@ func (b *Chain) ReadData(rw *bufio.ReadWriter) {
 }
 
 // WriteData write data
-func (b *Chain) WriteData(rw *bufio.ReadWriter) {
+func (b *Chain) WriteDataCli(rw *bufio.ReadWriter) {
 
 	go func() {
 		for {
@@ -134,4 +135,47 @@ func (b *Chain) WriteData(rw *bufio.ReadWriter) {
 		mutex.Unlock()
 	}
 
+}
+
+func (b *Chain) WriteDataRest(c *gin.Context) {
+
+	//for {
+	fmt.Print("> ")
+	//sentData, err := stdReader.ReadString('\n')
+	sentData := c.Query("data")
+	if sentData == "" {
+		log.Fatal("you sent an empty string")
+		return
+	}
+
+	sentData = strings.Replace(sentData, "\n", "", -1)
+
+	newBlock := GenerateBlock(b.BlockChain[len(b.BlockChain)-1], sentData)
+
+	if IsBlockValid(newBlock, b.BlockChain[len(b.BlockChain)-1]) {
+		mutex.Lock()
+		b.BlockChain = append(b.BlockChain, newBlock)
+		mutex.Unlock()
+
+		//}
+		/*bytes, err := json.Marshal(b.BlockChain)
+		if err != nil {
+			log.Println(err)
+		}
+
+		spew.Dump(b.BlockChain)
+
+		mutex.Lock()
+		//_,err = rw.WriteString(fmt.Sprintf("%s\n", string(bytes)))
+		if err != nil {
+			log.Println(err)
+		}
+
+		//err = rw.Flush()
+		if err != nil {
+			log.Println(err)
+		}
+
+		mutex.Unlock()*/
+	}
 }
