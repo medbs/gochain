@@ -105,8 +105,8 @@ func (b *Chain) Launch() (*Chain, error) {
 		//go b.Run(":8090")
 
 		// Create a thread to read and write data.
-		go b.WriteData(rw)
-		go b.ReadData(rw)
+		go b.WriteDataCli(rw)
+		go b.ReadDataCli(rw)
 
 		select {} // hang forever
 
