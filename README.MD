@@ -22,6 +22,12 @@ curl -d '{"field":"t1"}' -H "Content-Type: application/json" -X POST http://loca
 curl  -X POST http://localhost:8090/api/v1/ledger?data=helloworld
 ```
 
+Read Data from the ledger
+
+```
+curl -X GET http://localhost:8090/api/v1/ledger
+```
+
 ### Build & run the project
 
 Build 
