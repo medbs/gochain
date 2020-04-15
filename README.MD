@@ -3,26 +3,18 @@
 
 ### Run the project
 
-Start the ledger
+Start the blockchain
 ```
 go run cmd/main.go bc --ptpPort 9090 --httpPort 8090
 ```
 
-Add data to the ledger
-
-```
-curl  -X POST http://localhost:8090/api/v1/ledger?data=hd
-```
-
-```
-curl -d '{"field":"t1"}' -H "Content-Type: application/json" -X POST http://localhost:8099/api/v1/ledger
-```
+Add data to the blockchain
 
 ```
 curl  -X POST http://localhost:8090/api/v1/ledger?data=helloworld
 ```
 
-Read Data from the ledger
+Read Data from the blockchain
 
 ```
 curl -X GET http://localhost:8090/api/v1/ledger
