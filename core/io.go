@@ -158,15 +158,6 @@ func (b *Chain) WriteDataRest(c *gin.Context) {
 }
 
 func (b *Chain) ReadDataRest(c *gin.Context) {
-
-	bytes, err := json.MarshalIndent(b.BlockChain, "", "  ")
-	if err != nil {
-
-		log.Fatal(err)
-	}
-	
-	c.JSON(200, string(bytes))
+	c.JSON(200, b.BlockChain)
 
 }
-
-
