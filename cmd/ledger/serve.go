@@ -56,7 +56,6 @@ func init() {
 func serve(c *core.Chain) (*core.Chain, error) {
 
 	log.Println("running p2p server")
-
 	GlobalChain, err := c.Launch()
 
 	if err != nil {
