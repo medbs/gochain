@@ -10,8 +10,8 @@ func TestGenerateBlock(t *testing.T) {
 		Index:     1,
 		Timestamp: "stamp",
 		BPM:       "bpm",
-		Hash:      "hash",
-		PrevHash:  "prevhash",
+		Hash:      "41064f80255aee51e0e954f42ec238099eb636fbf11ffb929ecdb809d5d0dc6f",
+		PrevHash:  " ",
 	}
 
 	generatedBlock := GenerateBlock(b1, "bpm2")
@@ -24,7 +24,7 @@ func TestGenerateBlock(t *testing.T) {
 		t.Errorf("the generated block index should be previous index + 1 ")
 	}
 
-	if generatedBlock.BPM != "bmp2" {
+	if generatedBlock.BPM != "bpm2" {
 		t.Errorf("BPM value not assigned correctly")
 	}
 }
@@ -37,7 +37,7 @@ func TestCalculateHash(t *testing.T) {
 		Hash:      "hash",
 		PrevHash:  "prevhash",
 	}
-	//the know value of block hash
+	//the fixed and and correct value of block hash
 	correctHash := "41064f80255aee51e0e954f42ec238099eb636fbf11ffb929ecdb809d5d0dc6f"
 	blockHash := CalculateHash(b1)
 
