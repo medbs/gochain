@@ -26,3 +26,7 @@ func TestGenerateBlock(t *testing.T) {
 		t.Errorf("BPM value not assigned correctly")
 	}
 }
+
+func TestCalculateHash(t *testing.T){
+
+}
