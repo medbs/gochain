@@ -1,7 +1,7 @@
-### Prerequisites
+### Prerequisites
 * Go 1.13
 
-### Run the project
+### Run the project
 
 Start the blockchain
 ```
