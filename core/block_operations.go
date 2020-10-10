@@ -7,6 +7,14 @@ import (
 	"time"
 )
 
+
+type BlockOperation interface {
+	GenerateBlock() 
+	CalculateHash()
+	IsBlockValid()
+}
+
+
 //GenerateBlock new block
 func GenerateBlock(oldBlock Block, BPM string) Block {
 
