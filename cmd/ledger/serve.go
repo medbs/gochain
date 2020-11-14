@@ -11,6 +11,7 @@ import (
 
 var CommandServe *cobra.Command
 
+var address string
 var p2pPort int
 var target string
 var secio bool
@@ -25,7 +26,8 @@ func init() {
 		Run: func(CommandServe *cobra.Command, args []string) {
 
 			c := core.NewBlockChain(&core.P2pConfig{
-				ListenF: p2pPort,
+				Address: address,
+				Port: p2pPort,
 				Target:  target,
 				Secio:   secio,
 				Seed:    seed,
@@ -45,6 +47,7 @@ func init() {
 		},
 	}
 
+	CommandServe.Flags().StringVar(&address, "address", "127.0.0.1", "address of the node")
 	CommandServe.Flags().IntVar(&p2pPort, "ptpPort", 8199, "port: wait for incoming connections")
 	CommandServe.Flags().StringVar(&target, "d", "", "target peer to dial")
 	CommandServe.Flags().BoolVar(&secio, "secio", true, "enable secio")

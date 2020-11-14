@@ -30,23 +30,24 @@ func (b *Chain) Launch() (*Chain, error) {
 	golog.SetAllLoggers(gologging.INFO) // Change to DEBUG for extra info
 
 	// Parse options
-	listenF := &b.P2pConfig.ListenF
+	address := &b.P2pConfig.Address
+	port := &b.P2pConfig.Port
 	target := &b.P2pConfig.Target
-	secio:= &b.P2pConfig.Secio
-    seed:= &b.P2pConfig.Seed
+	secio := &b.P2pConfig.Secio
+	seed := &b.P2pConfig.Seed
 
 	flag.Parse()
 
-	if *listenF == 0 {
+	if *port == 0 {
 		log.Fatal("Please provide a port to bind on with -l")
 
 	}
 
 	// Make a host that listens on the given multiaddress
-	ha, err := MakeBasicHost(*listenF, *secio, *seed)
+	ha, err := MakeBasicHost(*address, *port, *secio, *seed)
 	if err != nil {
 		log.Fatal(err)
-		return nil,err
+		return nil, err
 	}
 
 	if *target == "" {
@@ -65,7 +66,7 @@ func (b *Chain) Launch() (*Chain, error) {
 		ipfsaddr, err := ma.NewMultiaddr(*target)
 		if err != nil {
 			log.Fatalln(err)
-			return nil,err
+			return nil, err
 		}
 
 		pid, err := ipfsaddr.ValueForProtocol(ma.P_IPFS)
@@ -97,7 +98,7 @@ func (b *Chain) Launch() (*Chain, error) {
 		s, err := ha.NewStream(context.Background(), peerid, "/p2p/1.0.0")
 		if err != nil {
 			log.Fatalln(err)
-			return nil ,err
+			return nil, err
 		}
 		// Create a buffered stream so that read and writes are non blocking.
 		rw := bufio.NewReadWriter(bufio.NewReader(s), bufio.NewWriter(s))

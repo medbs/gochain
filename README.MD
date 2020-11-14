@@ -5,7 +5,7 @@
 
 Start the blockchain
 ```
-go run cmd/main.go bc --ptpPort 9090 --httpPort 8090
+go run cmd/main.go bc --address 127.0.0.1 --ptpPort 9090 --httpPort 8090
 ```
 
 Add data to the blockchain

@@ -9,13 +9,13 @@ import (
 	mrand "math/rand"
 	"strings"
 
-	libp2p "github.com/libp2p/go-libp2p"
-	crypto "github.com/libp2p/go-libp2p-core/crypto"
-	host "github.com/libp2p/go-libp2p-core/host"
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/crypto"
+	"github.com/libp2p/go-libp2p-core/host"
 	ma "github.com/multiformats/go-multiaddr"
 )
 
-func MakeBasicHost(listenPort int, secio bool, randseed int64) (host.Host, error) {
+func MakeBasicHost(address string, listenPort int, secio bool, randseed int64) (host.Host, error) {
 
 	// If the seed is zero, use real cryptographic randomness. Otherwise, use a
 	// deterministic randomness source to make generated keys stay the same
@@ -35,7 +35,8 @@ func MakeBasicHost(listenPort int, secio bool, randseed int64) (host.Host, error
 	}
 
 	opts := []libp2p.Option{
-		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/127.0.0.1/tcp/%d", listenPort)),
+		//libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/51.91.100.180/tcp/%d", listenPort)),
+		libp2p.ListenAddrStrings(fmt.Sprintf("/ip4/%s/tcp/%d", address, listenPort)),
 		libp2p.Identity(priv),
 	}
 

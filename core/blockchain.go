@@ -2,7 +2,8 @@ package core
 
 //P2pConfig represents the configuration of the BlockChain node
 type P2pConfig struct {
-	ListenF int
+	Address string
+	Port int
 	Target string
 	Secio bool
 	Seed int64
