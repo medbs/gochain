@@ -9,29 +9,29 @@ import (
 
 
 type BlockOperation interface {
-	GenerateBlock() 
-	CalculateHash()
-	IsBlockValid()
+	GenerateBlock() Block
+	CalculateHash() string
+	IsBlockValid() bool
 }
 
 
 //GenerateBlock new block
-func GenerateBlock(oldBlock Block, BPM string) Block {
+func (b Block) GenerateBlock(BPM string) Block {
 
 	var newBlock Block
 	t := time.Now()
 
-	newBlock.Index = oldBlock.Index + 1
+	newBlock.Index = b.Index + 1
 	newBlock.Timestamp = t.String()
 	newBlock.BPM = BPM
-	newBlock.PrevHash = oldBlock.Hash
-	newBlock.Hash = CalculateHash(newBlock)
+	newBlock.PrevHash = b.Hash
+	newBlock.Hash = newBlock.CalculateHash()
 	return newBlock
 }
 
 // SHA256 hashing
-func CalculateHash(block Block) string {
-	record := strconv.Itoa(block.Index) + block.Timestamp + block.BPM + block.PrevHash
+func (b Block) CalculateHash() string {
+	record := strconv.Itoa(b.Index) + b.Timestamp + b.BPM + b.PrevHash
 	h := sha256.New()
 	h.Write([]byte(record))
 	hashed := h.Sum(nil)
@@ -40,17 +40,17 @@ func CalculateHash(block Block) string {
 
 
 // IsBlockValid make sure block is valid by checking index, and comparing the hash of the previous block
-func IsBlockValid(newBlock , oldBlock Block) bool {
+func (b Block)IsBlockValid(oldBlock Block) bool {
 
-	if oldBlock.Index+1 != newBlock.Index {
+	if oldBlock.Index+1 != b.Index {
 		return false
 	}
 
-	if oldBlock.Hash != newBlock.PrevHash {
+	if oldBlock.Hash != b.PrevHash {
 		return false
 	}
 
-	if CalculateHash(newBlock) != newBlock.Hash {
+	if b.CalculateHash() != b.Hash {
 		return false
 	}
 

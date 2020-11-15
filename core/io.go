@@ -107,9 +107,10 @@ func (b *Chain) WriteDataCli(rw *bufio.ReadWriter) {
 
 		sentData = strings.Replace(sentData, "\n", "", -1)
 
-		newBlock := GenerateBlock(b.BlockChain[len(b.BlockChain)-1], sentData)
+		oldBlock := b.BlockChain[len(b.BlockChain)-1]
+		newBlock := oldBlock.GenerateBlock(sentData)
 
-		if IsBlockValid(newBlock, b.BlockChain[len(b.BlockChain)-1]) {
+		if newBlock.IsBlockValid(b.BlockChain[len(b.BlockChain)-1]) {
 			mutex.Lock()
 			b.BlockChain = append(b.BlockChain, newBlock)
 			mutex.Unlock()
@@ -147,9 +148,10 @@ func (b *Chain) WriteDataRest(c *gin.Context) {
 	}
 
 	sentData = strings.Replace(sentData, "\n", "", -1)
-	newBlock := GenerateBlock(b.BlockChain[len(b.BlockChain)-1], sentData)
+	oldBlock := b.BlockChain[len(b.BlockChain)-1]
+	newBlock := oldBlock.GenerateBlock(sentData)
 
-	if IsBlockValid(newBlock, b.BlockChain[len(b.BlockChain)-1]) {
+	if newBlock.IsBlockValid(b.BlockChain[len(b.BlockChain)-1]) {
 		mutex.Lock()
 		b.BlockChain = append(b.BlockChain, newBlock)
 		mutex.Unlock()
